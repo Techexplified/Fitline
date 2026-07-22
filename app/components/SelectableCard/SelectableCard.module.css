@@ -1,0 +1,110 @@
+.card {
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background-color: #ffffff;
+  flex: 1;
+  min-width: 0;
+  box-sizing: border-box;
+  outline: none;
+  border: 1px solid #e2e8f0;
+  padding: 20px;
+}
+
+.card:hover {
+  border-color: #cbd5e1;
+  background-color: #fcfcfd;
+}
+
+.selectedCard {
+  border: 2px solid #111111;
+  padding: 19px; /* Compensate for the extra border width to prevent layout shift */
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05);
+}
+
+.selectedCard:hover {
+  border-color: #111111;
+  background-color: #ffffff;
+}
+
+.topRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.radioOuter {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 1.5px solid #cbd5e1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: border-color 0.2s;
+  box-sizing: border-box;
+  background-color: #ffffff;
+}
+
+.radioOuterSelected {
+  border-color: #111111;
+}
+
+.radioInner {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: #111111;
+}
+
+.title {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  color: #1a1a1a;
+  user-select: none;
+}
+
+.descriptionContainer {
+  padding-left: 30px;
+}
+
+.description {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  color: #64748b;
+  line-height: 1.45;
+  user-select: none;
+}
+
+.disabledCard {
+  cursor: not-allowed;
+  background-color: #f8fafc;
+  border-color: #e2e8f0;
+}
+
+.disabledCard:hover {
+  border-color: #e2e8f0;
+  background-color: #f8fafc;
+}
+
+.disabledRadioOuter {
+  border-color: #cbd5e1;
+  background-color: #f1f5f9;
+}
+
+.disabledRadioInner {
+  background-color: #94a3b8;
+}
+
+.disabledTitle {
+  color: #94a3b8;
+}
+
+.disabledDescription {
+  color: #94a3b8;
+}

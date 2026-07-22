@@ -1,0 +1,78 @@
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 10px 20px;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  outline: none;
+  box-sizing: border-box;
+  text-decoration: none;
+}
+
+.button:active {
+  transform: scale(0.98);
+}
+
+.primary {
+  background-color: #111111;
+  color: #ffffff;
+  border-color: #111111;
+}
+
+.primary:hover {
+  background-color: #222222;
+  border-color: #222222;
+}
+
+.secondary {
+  background-color: #ffffff;
+  color: #1a1a1a;
+  border-color: #cbd5e1;
+}
+
+.secondary:hover {
+  background-color: #f8fafc;
+  border-color: #94a3b8;
+  color: #111111;
+}
+
+.fullWidth {
+  width: 100%;
+}
+
+.button:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.loadingContainer {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.spinner {
+  width: 14px;
+  height: 14px;
+  animation: rotate 1.2s linear infinite;
+  display: inline-block;
+  flex-shrink: 0;
+}
+
+.spinner circle {
+  stroke: currentColor;
+}
+
+@keyframes rotate {
+  100% {
+    transform: rotate(360deg);
+  }
+}

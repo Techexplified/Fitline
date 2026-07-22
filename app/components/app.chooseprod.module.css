@@ -1,0 +1,14 @@
+.cardsRow {
+  display: flex;
+  flex-direction: row;
+  gap: 16px;
+  width: 100%;
+  margin-top: 16px;
+  box-sizing: border-box;
+}
+
+@media (max-width: 640px) {
+  .cardsRow {
+    flex-direction: column;
+  }
+}
