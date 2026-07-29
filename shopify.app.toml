@@ -48,7 +48,7 @@ api_version = "2026-10"
 redirect_urls = [ "https://example.com/api/auth" ]
 
 [app_proxy]
-url = "https://example.com/apps/fitline"
+url = "https://responding-secretariat-travels-pipes.trycloudflare.com/apps/fitline"
 subpath = "fitline"
 prefix = "apps"
 

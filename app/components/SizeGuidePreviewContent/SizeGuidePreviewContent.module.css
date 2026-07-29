@@ -1,0 +1,290 @@
+.browserContent {
+  transition: all 0.3s ease;
+  width: 100%;
+}
+
+.desktopLayout {
+  display: flex;
+  flex-direction: row;
+  padding: 24px;
+  gap: 20px;
+  align-items: flex-start;
+  box-sizing: border-box;
+}
+
+.mobileLayout {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  gap: 16px;
+  align-items: center;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.productImageContainer {
+  width: 120px;
+  height: 120px;
+  background-color: #f8fafc;
+  border: 1px solid #f1f5f9;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.productDetails {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  min-width: 0;
+  flex: 1;
+}
+
+.mobileLayout .productDetails {
+  align-items: center;
+  width: 100%;
+}
+
+.productTitle {
+  margin: 0 0 4px 0;
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: #1a1a1a;
+  line-height: 1.25;
+}
+
+.productPrice {
+  margin: 0 0 12px 0;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  color: #64748b;
+  font-weight: 500;
+}
+
+.colorSwatches {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.swatch {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 1px solid #cbd5e1;
+  display: block;
+}
+
+.swatchBlack {
+  background-color: #111111;
+  border-color: #111111;
+}
+
+.swatchSteel {
+  background-color: #4b5a6c;
+  border-color: #4b5a6c;
+}
+
+.swatchGray {
+  background-color: #cbd5e1;
+}
+
+.sizeGuideBtn {
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: #111111;
+  background-color: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  padding: 8px 16px;
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  outline: none;
+}
+
+.sizeGuideBtn:hover {
+  background-color: #f8fafc;
+  border-color: #94a3b8;
+}
+
+.floatingTab {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: #111111;
+  color: #ffffff;
+  padding: 10px 6px;
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  border-radius: 6px 0 0 6px;
+  cursor: pointer;
+  z-index: 50;
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  border: none;
+  outline: none;
+  transition: background-color 0.2s ease;
+}
+
+.floatingTab:hover {
+  background-color: #222222;
+}
+
+.inlineSection {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.divider {
+  width: 100%;
+  height: 1px;
+  background-color: #e2e8f0;
+  margin-bottom: 16px;
+}
+
+.inlineContent {
+  padding: 0 24px 24px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+  box-sizing: border-box;
+}
+
+.inlineHeading {
+  margin: 0 0 10px 0;
+  font-family: 'Inter', sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  color: #1a1a1a;
+  user-select: none;
+}
+
+@media (max-width: 640px) {
+  .inlineContent {
+    padding: 0 20px 20px 20px;
+    align-items: center;
+    text-align: center;
+  }
+}
+
+/* Size Finder Widget Styles */
+.finderContainer {
+  border-top: 1px solid #e2e8f0;
+  padding-top: 20px;
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  align-self: stretch;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.finderHeading {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: #111827;
+}
+
+.finderForm {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.finderField {
+  flex: 1;
+  min-width: 120px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.finderLabel {
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  color: #475569;
+}
+
+.optionalText {
+  font-size: 11px;
+  font-weight: 400;
+  color: #94a3b8;
+}
+
+.finderInputWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.finderInput {
+  width: 100%;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  padding: 8px 40px 8px 12px;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  color: #111827;
+  box-sizing: border-box;
+  outline: none;
+  background-color: #ffffff;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.finderInput:focus {
+  border-color: #94a3b8;
+  box-shadow: 0 0 0 2px rgba(148, 163, 184, 0.1);
+}
+
+.finderUnitBadge {
+  position: absolute;
+  right: 12px;
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  color: #94a3b8;
+  font-weight: 500;
+  pointer-events: none;
+}
+
+.finderButton {
+  background-color: #111827;
+  color: #ffffff;
+  border: 1px solid #111827;
+  border-radius: 8px;
+  padding: 10px 16px;
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+  width: 100%;
+  text-align: center;
+  box-sizing: border-box;
+  outline: none;
+}
+
+.finderButton:hover:not(:disabled) {
+  background-color: #1f2937;
+  border-color: #1f2937;
+}
+
+.finderButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}

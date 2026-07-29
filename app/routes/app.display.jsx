@@ -6,7 +6,7 @@ import { authenticate } from "../shopify.server";
 import SetupLayout from "../components/SetupLayout/SetupLayout";
 import PlacementOptionCard from "../components/PlacementOptionCard/PlacementOptionCard";
 import TextField from "../components/TextField/TextField";
-import SizeGuidePopup from "../components/SizeGuidePopup/SizeGuidePopup";
+import SizeGuidePreviewContent from "../components/SizeGuidePreviewContent/SizeGuidePreviewContent";
 import styles from "../components/app.display.module.css";
 
 const placementOptions = [
@@ -59,7 +59,14 @@ export default function DisplaySetup() {
   const location = useLocation();
   const [selectedPlacement, setSelectedPlacement] = useState("popup");
   const [buttonLabel, setButtonLabel] = useState("Size guide");
-  const [isPopupOpen, setIsPopupOpen] = useState(false);
+
+  const effectiveChartData = location.state?.chartData || sampleChartData;
+  const effectiveUnit = location.state?.unit || "cm";
+  const mockProduct = {
+    title: "Heavyweight Boxy Tee",
+    price: "$48.00",
+    swatches: ["black", "steel", "gray"]
+  };
 
   const handleBack = () => {
     navigate("/app/chart");
@@ -82,15 +89,15 @@ export default function DisplaySetup() {
   const showButtonLabelInput = selectedPlacement === "popup" || selectedPlacement === "floating";
 
   const previewConfig = {
-    placement: selectedPlacement,
-    buttonLabel: buttonLabel,
-    onSizeGuideClick: () => setIsPopupOpen(true),
-    previewChartData: sampleChartData,
-    children: (
-      <SizeGuidePopup
-        open={isPopupOpen}
-        onClose={() => setIsPopupOpen(false)}
-        chartData={sampleChartData}
+    children: ({ device }) => (
+      <SizeGuidePreviewContent
+        placement={selectedPlacement}
+        buttonLabel={buttonLabel}
+        chartData={effectiveChartData}
+        unit={effectiveUnit}
+        sizeFinderEnabled={false}
+        productMock={mockProduct}
+        device={device}
       />
     )
   };

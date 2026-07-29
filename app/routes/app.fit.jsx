@@ -8,6 +8,7 @@ import SetupLayout from "../components/SetupLayout/SetupLayout";
 import RecommendationResult from "../components/RecommendationResult/RecommendationResult";
 import Button from "../components/Button/Button";
 import { getRecommendedSize } from "../utils/sizeRecommendation";
+import SizeGuidePreviewContent from "../components/SizeGuidePreviewContent/SizeGuidePreviewContent";
 import styles from "../components/app.fit.module.css";
 
 const sampleApparelChart = {
@@ -121,8 +122,41 @@ export default function FitSetup() {
   const location = useLocation();
   const fetcher = useFetcher();
   const [enabled, setEnabled] = useState(true);
-  const [chest, setChest] = useState("90");
-  const [waist, setWaist] = useState("78");
+
+  const effectiveChartData = location.state?.chartData || sampleApparelChart;
+  const effectiveUnit = location.state?.unit || "cm";
+  const mockProduct = {
+    title: "Heavyweight Boxy Tee",
+    price: "$48.00",
+    swatches: ["black", "steel", "gray"]
+  };
+
+  const getNumericColumns = (chart) => {
+    if (!chart || !chart.columns) return [];
+    return chart.columns.filter((col) => {
+      return chart.rows?.some((row) => {
+        const val = row.values?.[col];
+        return val !== undefined && val !== null && val !== "" && !isNaN(parseFloat(val));
+      });
+    });
+  };
+
+  const numericCols = getNumericColumns(effectiveChartData);
+  const [inputs, setInputs] = useState(() => {
+    const initial = {};
+    numericCols.forEach((col) => {
+      const lower = col.toLowerCase();
+      if (lower === "chest" || lower === "chest / bust") {
+        initial[col] = "90";
+      } else if (lower === "waist") {
+        initial[col] = "78";
+      } else {
+        initial[col] = "";
+      }
+    });
+    return initial;
+  });
+
   const [isRecommending, setIsRecommending] = useState(false);
   const [recommendationResult, setRecommendationResult] = useState(null);
   const [publishError, setPublishError] = useState(null);
@@ -135,6 +169,8 @@ export default function FitSetup() {
     setPublishError(null);
     const payload = {
       ...location.state,
+      chartData: effectiveChartData,
+      unit: effectiveUnit,
       recommendEnabled: enabled,
     };
     fetcher.submit(
@@ -171,7 +207,7 @@ export default function FitSetup() {
   const handleRecommend = () => {
     setIsRecommending(true);
     setTimeout(() => {
-      const result = getRecommendedSize(sampleApparelChart, { chest, waist });
+      const result = getRecommendedSize(effectiveChartData, inputs);
       setRecommendationResult(result);
       setIsRecommending(false);
     }, 600); // Artificial delay to simulate processing
@@ -191,8 +227,17 @@ export default function FitSetup() {
       continueLoading={isPublishing}
       continueLoadingText="Publishing..."
       previewContent={{
-        placement: location.state?.selectedPlacement || "floating",
-        buttonLabel: location.state?.buttonLabel || "Size guide"
+        children: ({ device }) => (
+          <SizeGuidePreviewContent
+            placement={location.state?.selectedPlacement || "popup"}
+            buttonLabel={location.state?.buttonLabel || "Size guide"}
+            chartData={effectiveChartData}
+            unit={effectiveUnit}
+            sizeFinderEnabled={enabled}
+            productMock={mockProduct}
+            device={device}
+          />
+        )
       }}
     >
       {/* Enable Banner */}
@@ -218,55 +263,62 @@ export default function FitSetup() {
       <div className={styles.simulationSection}>
         <h4 className={styles.formHeading}>Try it as a shopper would</h4>
         
-        <div className={styles.formRow}>
-          <div className={styles.inputCol}>
-            <label className={styles.inputLabel} htmlFor="chest-input">Chest / bust</label>
-            <div className={styles.inputWrapper}>
-              <input 
-                id="chest-input"
-                type="text" 
-                value={chest} 
-                onChange={(e) => setChest(e.target.value)} 
-                className={styles.formInput} 
-              />
-              <span className={styles.unitBadge}>cm</span>
+        {numericCols.length > 0 ? (
+          <>
+            <div className={styles.formRow}>
+              {numericCols.map((col) => {
+                const isOptional = col.toLowerCase() === "waist";
+                const inputId = `sim-input-${col.replace(/[^a-zA-Z0-9]/g, "-")}`;
+                return (
+                  <div key={col} className={styles.inputCol}>
+                    <label className={styles.inputLabel} htmlFor={inputId}>
+                      {col} {isOptional && <span className={styles.optionalText}>optional</span>}
+                    </label>
+                    <div className={styles.inputWrapper}>
+                      <input 
+                        id={inputId}
+                        type="number"
+                        step="any"
+                        min="0"
+                        value={inputs[col] ?? ""} 
+                        onChange={(e) => setInputs({ ...inputs, [col]: e.target.value })} 
+                        className={styles.formInput} 
+                      />
+                      <span className={styles.unitBadge}>{effectiveUnit}</span>
+                    </div>
+                  </div>
+                );
+              })}
             </div>
-          </div>
 
-          <div className={styles.inputCol}>
-            <label className={styles.inputLabel} htmlFor="waist-input">
-              Waist <span className={styles.optionalText}>optional</span>
-            </label>
-            <div className={styles.inputWrapper}>
-              <input 
-                id="waist-input"
-                type="text" 
-                value={waist} 
-                onChange={(e) => setWaist(e.target.value)} 
-                className={styles.formInput} 
-              />
-              <span className={styles.unitBadge}>cm</span>
+            <div className={styles.buttonSection}>
+              <Button 
+                onClick={handleRecommend} 
+                fullWidth={true}
+                loading={isRecommending}
+                loadingText="Recommending..."
+              >
+                Recommend my size
+              </Button>
             </div>
-          </div>
-        </div>
 
-        <div className={styles.buttonSection}>
-          <Button 
-            onClick={handleRecommend} 
-            fullWidth={true}
-            loading={isRecommending}
-            loadingText="Recommending..."
-          >
-            Recommend my size
-          </Button>
-        </div>
-
-        {recommendationResult && (
-          <RecommendationResult 
-            size={recommendationResult.size} 
-            reason={recommendationResult.reason} 
-            confidence={recommendationResult.confidence} 
-          />
+            {recommendationResult && (
+              <RecommendationResult 
+                size={recommendationResult.size} 
+                reason={recommendationResult.reason} 
+                confidence={recommendationResult.confidence} 
+              />
+            )}
+          </>
+        ) : (
+          <p style={{
+            fontSize: '13px',
+            color: '#64748b',
+            fontFamily: "'Inter', sans-serif",
+            textAlign: 'left'
+          }}>
+            No numeric columns available in the chart to recommend a size.
+          </p>
         )}
       </div>
 

@@ -60,3 +60,15 @@
   font-weight: 700;
   color: #111111;
 }
+
+.trHighlighted {
+  background-color: #ecfdf3 !important;
+}
+
+.trHighlighted .td {
+  color: #047857;
+}
+
+.trHighlighted .rowLabel {
+  color: #065f46;
+}

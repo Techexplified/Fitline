@@ -2,7 +2,7 @@
 import SizeChartReadOnlyTable from "../SizeChartReadOnlyTable/SizeChartReadOnlyTable";
 import styles from "./SizeGuidePopup.module.css";
 
-export default function SizeGuidePopup({ open, onClose, title = "Size guide", chartData }) {
+export default function SizeGuidePopup({ open, onClose, title = "Size guide", chartData, children }) {
   if (!open || !chartData) return null;
 
   return (
@@ -16,6 +16,7 @@ export default function SizeGuidePopup({ open, onClose, title = "Size guide", ch
         </header>
 
         <SizeChartReadOnlyTable chartData={chartData} />
+        {children}
       </div>
     </div>
   );

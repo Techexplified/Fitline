@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import styles from "./SizeChartReadOnlyTable.module.css";
 
-export default function SizeChartReadOnlyTable({ chartData }) {
+export default function SizeChartReadOnlyTable({ chartData, highlightedRowIndex = -1 }) {
   if (!chartData) return null;
 
   const { unit, rowLabelHeader, columns, rows } = chartData;
@@ -23,14 +23,18 @@ export default function SizeChartReadOnlyTable({ chartData }) {
             </tr>
           </thead>
           <tbody>
-            {rows.map((row, idx) => (
-              <tr key={row.label || idx} className={styles.tr}>
-                <td className={`${styles.td} ${styles.rowLabel}`}>{row.label}</td>
-                {columns.map((col) => (
-                  <td key={col} className={styles.td}>{row.values[col]}</td>
-                ))}
-              </tr>
-            ))}
+            {rows.map((row, idx) => {
+              const isHighlighted = idx === highlightedRowIndex;
+              const rowClassName = `${styles.tr} ${isHighlighted ? styles.trHighlighted : ""}`;
+              return (
+                <tr key={row.label || idx} className={rowClassName}>
+                  <td className={`${styles.td} ${styles.rowLabel}`}>{row.label}</td>
+                  {columns.map((col) => (
+                    <td key={col} className={styles.td}>{row.values[col]}</td>
+                  ))}
+                </tr>
+              );
+            })}
           </tbody>
         </table>
       </div>
