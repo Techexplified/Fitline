@@ -47,5 +47,10 @@ api_version = "2026-10"
 [auth]
 redirect_urls = [ "https://example.com/api/auth" ]
 
+[app_proxy]
+url = "https://example.com/apps/fitline"
+subpath = "fitline"
+prefix = "apps"
+
 [build]
 automatically_update_urls_on_dev = true
