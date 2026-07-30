@@ -1,7 +1,7 @@
 # Learn more about configuring your app at https://shopify.dev/docs/apps/tools/cli/configuration
 
 client_id = "623f613dc7af420668d1baf91299768e"
-application_url = "https://example.com"
+application_url = "https://fitline-eight.vercel.app"
 embedded = true
 name = "Fitline"
 
@@ -45,10 +45,10 @@ api_version = "2026-10"
   topics = [ "app/scopes_update" ]
 
 [auth]
-redirect_urls = [ "https://example.com/api/auth" ]
+redirect_urls = [ "https://fitline-eight.vercel.app/api/auth" ]
 
 [app_proxy]
-url = "https://responding-secretariat-travels-pipes.trycloudflare.com/apps/fitline"
+url = "https://fitline-eight.vercel.app//apps/fitline"
 subpath = "fitline"
 prefix = "apps"
 
