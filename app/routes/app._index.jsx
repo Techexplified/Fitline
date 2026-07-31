@@ -1,5 +1,5 @@
 /* global process */
-import { useNavigate } from "react-router";
+import { useNavigate, useLoaderData } from "react-router";
 import { boundary } from "@shopify/shopify-app-react-router/server";
 import { authenticate } from "../shopify.server";
 import styles from "../components/app._index.module.css";
@@ -77,22 +77,31 @@ const steps = [
 ];
 
 export const loader = async ({ request }) => {
+  let shop = "mock-shop.myshopify.com";
   try {
-    await authenticate.admin(request);
+    const { session } = await authenticate.admin(request);
+    shop = session.shop;
   } catch (error) {
     if (process.env.NODE_ENV === "development") {
-      return null;
+      return { shop };
     }
     throw error;
   }
-  return null;
+  return { shop };
 };
 
 export default function Index() {
   const navigate = useNavigate();
+  const { shop } = useLoaderData();
 
   const handleGetStarted = () => {
     navigate("/app/chooseprod");
+  };
+
+  const handleOpenThemeEditor = () => {
+    const shopHandle = shop.replace(".myshopify.com", "");
+    const themeEditorUrl = `https://admin.shopify.com/store/${shopHandle}/themes/current/editor?context=apps`;
+    window.open(themeEditorUrl, "_blank");
   };
 
   return (
@@ -113,6 +122,9 @@ export default function Index() {
         <div className={styles.actions}>
           <Button onClick={handleGetStarted} variant="primary">
             Get started
+          </Button>
+          <Button onClick={handleOpenThemeEditor} variant="secondary">
+            Open theme editor
           </Button>
         </div>
       </div>
