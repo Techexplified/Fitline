@@ -1,9 +1,8 @@
 /* global process */
-import { useLocation, useNavigate } from "react-router";
+import { useLocation } from "react-router";
 import { boundary } from "@shopify/shopify-app-react-router/server";
 import { authenticate } from "../shopify.server";
 import SetupSummaryList from "../components/SetupSummaryList/SetupSummaryList";
-import Button from "../components/Button/Button";
 import styles from "../components/app.published.module.css";
 
 const mockSummary = {
@@ -37,7 +36,6 @@ function CheckCircleIcon() {
 
 export default function PublishedSetup() {
   const location = useLocation();
-  const navigate = useNavigate();
 
   // Read configuration state from router transition, fall back to mock details in dev
   const summary = location.state || mockSummary;
@@ -69,16 +67,6 @@ export default function PublishedSetup() {
     },
   ];
 
-  const handleEdit = () => {
-    // Navigate back to step 1 to let them modify their choices
-    navigate("/app/chooseprod");
-  };
-
-  const handleViewStore = () => {
-    // TODO: link to storefront product with size guide
-    console.log("TODO: link to storefront product with size guide");
-  };
-
   return (
     <div className={styles.container}>
       <div className={styles.iconCircle}>
@@ -95,15 +83,6 @@ export default function PublishedSetup() {
 
       <div className={styles.summaryCardWrapper}>
         <SetupSummaryList items={items} />
-      </div>
-
-      <div className={styles.buttonGroup}>
-        <Button onClick={handleViewStore} variant="primary">
-          View on your store
-        </Button>
-        <Button onClick={handleEdit} variant="secondary">
-          Edit setup
-        </Button>
       </div>
     </div>
   );
