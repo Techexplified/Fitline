@@ -44,13 +44,17 @@ api_version = "2026-10"
   uri = "/webhooks/app/scopes_update"
   topics = [ "app/scopes_update" ]
 
+  [[webhooks.subscriptions]]
+  compliance_topics = ["customers/data_request", "customers/redact", "shop/redact"]
+  uri = "/webhooks/compliance"
+
 [auth]
 redirect_urls = [ "https://fitline-eight.vercel.app/api/auth" ]
 
 [app_proxy]
-url = "https://fitline-eight.vercel.app//apps/fitline"
+url = "https://fitline-eight.vercel.app/apps/fitline"
 subpath = "fitline"
 prefix = "apps"
 
 [build]
-automatically_update_urls_on_dev = true
+automatically_update_urls_on_dev = false
